@@ -13,7 +13,7 @@ class HomeWidget extends StatelessWidget
   Widget build(BuildContext context)
   {
     return Scaffold(
-      body: Text("Hello World"),
+      body: Text("Hello World!"),
     );
   }
 }
