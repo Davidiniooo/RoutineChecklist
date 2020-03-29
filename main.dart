@@ -40,12 +40,17 @@ class ListedRoutine extends StatelessWidget{
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        Row(
+        Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(top: 1, bottom: 1,left: 100),
-              child: Icon(Icons.arrow_forward),
-            )
+            ListTile(
+              leading: Icon(Icons.lightbulb_outline),
+              title: Text(
+                'Routine1'
+              ),
+              trailing: IconButton(
+                icon: Icon(Icons.arrow_forward,color: Colors.blue,)
+              ),
+            ),
           ]
         ),
       ]
