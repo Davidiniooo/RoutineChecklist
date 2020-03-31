@@ -14,36 +14,60 @@ class _MainAppState extends State<MainApp>{
   Widget build(BuildContext context){
     return MaterialApp
     (
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.grey,
-          title: Container(
-            padding: EdgeInsets.all(5.0),
-            child: Text("Routines"),
-          ),
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            //onPressed: (),
-          ),
-          actions: <Widget>[
-
-          ],//list
-        ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
-          backgroundColor: Colors.grey,
-        ),
-        body: ListedRoutine(),
+      theme: ThemeData(
+        primaryColor: Colors.grey,
+        accentColor: Colors.orange,
       ),
+      home: MainHome(),
     );
   }
 }
+
+class MainHome extends StatefulWidget {
+  @override
+  _MainHomeState createState() => _MainHomeState();
+}
+
+class _MainHomeState extends State<MainHome> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Container(
+          padding: EdgeInsets.all(5.0),
+          child: Text("Routines"),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.menu),
+          //onPressed: (),
+        ),
+        actions: <Widget>[
+
+        ],//list
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.grey,
+        child: Icon(Icons.add),
+        onPressed: (){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) =>
+                    InputForm(),
+              ),
+            );
+          },
+        ),
+      body: ListedRoutine(),
+    );
+  }
+}
+
 
 class ListedRoutine extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 1,
+      itemCount: 3,
       itemBuilder: (context,i){
         return SingeListedRoutine();
       }
@@ -55,12 +79,26 @@ class SingeListedRoutine extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(Icons.lightbulb_outline,color: Colors.orange),
+      leading: Icon(Icons.lightbulb_outline),
       title: Text(
           'Routine1'
       ),
       trailing: IconButton(
-          icon: Icon(Icons.arrow_forward,color: Colors.orange)
+          icon: Icon(Icons.arrow_forward)
+      ),
+    );
+  }
+}
+
+class InputForm extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){Navigator.of(context).pop();},
+        ),
       ),
     );
   }
