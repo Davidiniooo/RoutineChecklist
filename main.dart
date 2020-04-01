@@ -15,8 +15,8 @@ class _MainAppState extends State<MainApp>{
     return MaterialApp
     (
       theme: ThemeData(
-        primaryColor: Colors.grey,
-        accentColor: Colors.orange,
+        primaryColor: Colors.green,
+        accentColor: Colors.green,
       ),
       home: MainHome(),
     );
@@ -46,7 +46,6 @@ class _MainHomeState extends State<MainHome> {
         ],//list
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.grey,
         child: Icon(Icons.add),
         onPressed: (){
           Navigator.of(context).push(
@@ -99,6 +98,23 @@ class InputForm extends StatelessWidget{
           icon: Icon(Icons.arrow_back),
           onPressed: (){Navigator.of(context).pop();},
         ),
+        title: Text("Add a new Routine"),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: 1,top: 1),
+            padding: EdgeInsets.only(bottom: 10,top: 10),
+            alignment: Alignment.topCenter,
+            child: Form(
+              child: ListView(
+                children: <Widget>[
+                  TextFormField()
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
