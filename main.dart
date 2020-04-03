@@ -100,22 +100,29 @@ class InputForm extends StatelessWidget{
         ),
         title: Text("Add a new Routine"),
       ),
-      body: ListView(
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(bottom: 1,top: 1),
-            padding: EdgeInsets.only(bottom: 10,top: 10),
-            alignment: Alignment.topCenter,
-            child: Form(
-              child: ListView(
-                children: <Widget>[
-                  TextFormField()
-                ],
-              ),
+      body: Form(
+        child:ListView(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 0),
+              color: Colors.green,
+              alignment: Alignment.center,
+              padding: EdgeInsets.all(10),
+              child: Text(
+                "Step1:",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
             ),
-          )
-        ],
-      ),
+            TextFormField(
+              cursorColor: Colors.grey,
+            )
+          ],
+        )
+      )
     );
   }
 }
