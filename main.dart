@@ -118,7 +118,12 @@ class InputForm extends StatelessWidget{
               )
             ),
           ),
-          RaisedButton(onPressed: null)
+
+          RaisedButton(
+            color: Colors.green,
+            onPressed: Navigator.of(context).pop,
+            child: Text("Submit")
+          ),
         ],
       )
     );
@@ -144,8 +149,36 @@ class StepInputForm extends StatelessWidget
             ),
           )
         ),
-        TextFormField(
-          cursorColor: Colors.grey,
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: TextFormField(
+                cursorColor: Colors.grey,
+              )
+            ),
+            FlatButton(
+              color: Colors.green,
+              onPressed: (){
+                showDialog(
+                  context: context,
+                  builder: (_)=> AlertDialog(
+                    title: Text("How long does this step take?"),
+                    content: TextField(),
+                    actions: <Widget>[
+                      FlatButton(
+                        child: Text("Set Time"),
+                        onPressed: null,
+                      )
+                    ],
+                  ),
+                  barrierDismissible: true
+                );
+              },
+              child: Text(
+                  "Time"
+              )
+            ),
+          ],
         )
       ]
     );
