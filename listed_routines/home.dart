@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_test/globals.dart';
 import 'package:flutter_app_test/listed_routines/list.dart';
 import 'package:flutter_app_test/add_routine/form.dart';
 
@@ -19,19 +18,9 @@ class _MainHomeState extends State<MainHome> {
         ),
         leading: IconButton(
           icon: Icon(Icons.menu),
-          onPressed: (){
-            globalAddRoutine(1, 'routineName', [2], ['stepNames']);
-            showDialog(
-              context: context,
-              builder:(_)=> AlertDialog(
-              title: Text(global_routines[0].stepNames[0]),
-              )
-            );
-          }
+          onPressed: null
         ),
-        actions: <Widget>[
-
-        ],//list
+        actions: <Widget>[],//list
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),

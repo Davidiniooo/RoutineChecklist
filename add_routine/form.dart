@@ -40,8 +40,20 @@ class InputForm extends StatelessWidget{
     );
   }
 }
-class StepInputForm extends StatelessWidget
+class StepInputForm extends StatefulWidget
 {
+  @override
+  _StepInputFormState createState() => _StepInputFormState();
+}
+
+class _StepInputFormState extends State<StepInputForm> {
+  final _controller = TextEditingController();
+  @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -73,11 +85,22 @@ class StepInputForm extends StatelessWidget
                         context: context,
                         builder: (_)=> AlertDialog(
                           title: Text("How long does this step take?"),
-                          content: TextField(),
+                          content: TextField(
+                            controller: _controller,
+                          ),
                           actions: <Widget>[
                             FlatButton(
                               child: Text("Set Time"),
-                              onPressed: null,
+                              onPressed: (){
+                                return showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Text(_controller.text),
+                                    );
+                                  },
+                                );
+                              },
                             )
                           ],
                         ),
