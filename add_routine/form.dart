@@ -1,42 +1,63 @@
 import 'package:flutter/material.dart';
 
-class InputForm extends StatelessWidget{
+class InputForm extends StatefulWidget{
   @override
+  _InputFormState createState() => _InputFormState();
+}
+
+class _InputFormState extends State<InputForm> {
+  int stepsCounter = 1;
+
+  @override
+  void addStep(){
+    setState((){
+      stepsCounter++;
+    });
+  }
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: (){Navigator.of(context).pop();},
-          ),
-          title: Text("Add a new Routine"),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: (){Navigator.of(context).pop();},
         ),
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: Form(
-                  child:ListView(
-                      children: <Widget>[
-                        StepInputForm(),
-                        StepInputForm(),
-                        Container(
-                          alignment: Alignment.center,
-                          child: IconButton(
-                            icon: Icon(Icons.add),
-                          ),
-                        ),
-                      ]
-                  )
+        title: Text("Add a new Routine"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Form(
+            child:Expanded(
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: stepsCounter,
+                      itemBuilder: (context, i){
+                        return StepInputForm();
+                      }
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.topCenter,
+                    child: IconButton(
+                      onPressed: addStep,
+                      icon: Icon(Icons.add),
+                    ),
+                  ),
+                ]
               ),
-            ),
-
-            RaisedButton(
-                color: Colors.green,
-                onPressed: Navigator.of(context).pop,
-                child: Text("Submit")
-            ),
-          ],
-        )
+            )
+          ),
+          RaisedButton(
+            color: Colors.green,
+            onPressed: (){
+              Navigator.of(context).pop();
+            },
+            child: Text("Submit")
+          ),
+        ],
+      )
     );
   }
 }
@@ -47,10 +68,15 @@ class StepInputForm extends StatefulWidget
 }
 
 class _StepInputFormState extends State<StepInputForm> {
-  final _controller = TextEditingController();
+  final _controllerTimeInput = TextEditingController();
+  int index = -1;
+  String stepName;
+  double stepTime = -1;
+
+
   @override
   void dispose(){
-    _controller.dispose();
+    _controllerTimeInput.dispose();
     super.dispose();
   }
 
@@ -86,21 +112,15 @@ class _StepInputFormState extends State<StepInputForm> {
                         builder: (_)=> AlertDialog(
                           title: Text("How long does this step take?"),
                           content: TextField(
-                            controller: _controller,
+                            controller: _controllerTimeInput,
                           ),
                           actions: <Widget>[
                             FlatButton(
                               child: Text("Set Time"),
                               onPressed: (){
-                                return showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      content: Text(_controller.text),
-                                    );
-                                  },
-                                );
-                              },
+                                stepTime = double.parse(_controllerTimeInput.text);
+                                Navigator.of(context).pop();
+                              }
                             )
                           ],
                         ),

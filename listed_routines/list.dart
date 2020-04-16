@@ -20,6 +20,7 @@ class SingeListedRoutine extends StatelessWidget{
           'Routine1'
       ),
       trailing: IconButton(
+        onPressed: null,
           icon: Icon(Icons.arrow_forward)
       ),
     );
