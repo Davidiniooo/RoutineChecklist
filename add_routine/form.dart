@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
+List<Widget> tempStepInputForms = [];
+
 class InputForm extends StatefulWidget{
+
   @override
   _InputFormState createState() => _InputFormState();
 }
 
 class _InputFormState extends State<InputForm> {
-  int stepsCounter = 1;
+  int stepsCounter = 0;
 
-  @override
   void addStep(){
     setState((){
       stepsCounter++;
+      StepInputForm  tempStepInputForm = new StepInputForm(stepsCounter);
+      tempStepInputForms.add(tempStepInputForm);
     });
   }
   Widget build(BuildContext context) {
@@ -31,11 +35,11 @@ class _InputFormState extends State<InputForm> {
                 children: <Widget>[
                   Expanded(
                     child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: stepsCounter,
-                      itemBuilder: (context, i){
-                        return StepInputForm();
-                      }
+                      itemCount: tempStepInputForms.length,
+                      itemBuilder: (context,i)
+                      {
+                        return tempStepInputForms[i];
+                      },
                     ),
                   ),
                   Container(
@@ -52,6 +56,8 @@ class _InputFormState extends State<InputForm> {
           RaisedButton(
             color: Colors.green,
             onPressed: (){
+              for(int i=0;stepsCounter>i;i++){
+              }
               Navigator.of(context).pop();
             },
             child: Text("Submit")
@@ -61,24 +67,37 @@ class _InputFormState extends State<InputForm> {
     );
   }
 }
+
+int global_index;
+//this is a very bad solution
+//TODO: Improve this
+
 class StepInputForm extends StatefulWidget
 {
+  String stepName;
+  double stepTime = -1 ;
+
+  StepInputForm(int i){
+    global_index = i;
+  }
   @override
   _StepInputFormState createState() => _StepInputFormState();
 }
 
+
+
 class _StepInputFormState extends State<StepInputForm> {
   final _controllerTimeInput = TextEditingController();
-  int index = -1;
-  String stepName;
-  double stepTime = -1;
+  final _controllerNameInput = TextEditingController();
 
 
   @override
   void dispose(){
     _controllerTimeInput.dispose();
+    _controllerNameInput.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +108,7 @@ class _StepInputFormState extends State<StepInputForm> {
               alignment: Alignment.center,
               padding: EdgeInsets.all(10),
               child: Text(
-                "Step1:",
+                'Step $global_index :',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -100,9 +119,16 @@ class _StepInputFormState extends State<StepInputForm> {
           Row(
             children: <Widget>[
               Expanded(
-                  child: TextFormField(
-                    cursorColor: Colors.grey,
-                  )
+                child: TextFormField(
+                  cursorColor: Colors.grey,
+                  controller: _controllerNameInput,
+                  onChanged: (_){
+                    widget.stepName = _controllerNameInput.text;
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'How is this step called?',
+                  ),
+                )
               ),
               FlatButton(
                   color: Colors.green,
@@ -118,7 +144,7 @@ class _StepInputFormState extends State<StepInputForm> {
                             FlatButton(
                               child: Text("Set Time"),
                               onPressed: (){
-                                stepTime = double.parse(_controllerTimeInput.text);
+                                widget.stepTime = double.parse(_controllerTimeInput.text);
                                 Navigator.of(context).pop();
                               }
                             )
