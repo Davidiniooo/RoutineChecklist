@@ -16,14 +16,15 @@ class GlobalRoutine {
 
 class ListGlobalRoutines{
   int currentIndex = 0;
-  List<GlobalRoutine> global_routines = [];
+  List<GlobalRoutine> globalRoutines = [];
 
   void globalAddRoutine(String routineName, List<double> stepTimes, List<String> stepNames){
     GlobalRoutine _ = new GlobalRoutine(currentIndex, routineName, stepTimes, stepNames);
-    global_routines.add(_);
+    globalRoutines.add(_);
     currentIndex++;
   }
 }
+// ignore: non_constant_identifier_names
 ListGlobalRoutines GLOBAL_LIST_ROUTINES = new ListGlobalRoutines();
 
 

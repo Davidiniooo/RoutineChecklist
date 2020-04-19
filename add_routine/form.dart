@@ -4,13 +4,15 @@ import 'package:flutter_app_test/globals.dart';
 List<Widget> tempStepInputForms = [];
 
 class InputForm extends StatefulWidget{
-
+   String routineName;
   @override
   _InputFormState createState() => _InputFormState();
 }
 
 class _InputFormState extends State<InputForm> {
   int stepsCounter = 0;
+
+  final _controllerRoutineNameInput = TextEditingController();
 
   void addStep(){
     setState((){
@@ -24,7 +26,10 @@ class _InputFormState extends State<InputForm> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: (){Navigator.of(context).pop();},
+          onPressed: (){
+            tempStepInputForms.clear();
+            Navigator.of(context).pop();
+            },
         ),
         title: Text("Add a new Routine"),
       ),
@@ -34,6 +39,33 @@ class _InputFormState extends State<InputForm> {
             child:Expanded(
               child: Column(
                 children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.topCenter,
+                        color: Colors.grey,
+                        padding: EdgeInsets.all(10),
+                        child: Text("Name of the Routine",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic
+                          ),
+                        ),
+                      ),
+                      TextFormField(
+                        controller: _controllerRoutineNameInput,
+                        onChanged: (_){
+                          widget.routineName = _controllerRoutineNameInput.text;
+                        },
+                      ),
+                      Divider(
+                        color: Colors.grey,
+                        thickness: 3,
+                      ),
+                    ],
+                  ),
                   Expanded(
                     child: ListView.builder(
                       itemCount: tempStepInputForms.length,
@@ -64,8 +96,9 @@ class _InputFormState extends State<InputForm> {
               {
                 tempStepNames.add(tempCastedList[i].stepName);
                 tempStepTimes.add(tempCastedList[i].stepTime);
-                GLOBAL_LIST_ROUTINES.globalAddRoutine('test', tempStepTimes, tempStepNames);
               }
+              GLOBAL_LIST_ROUTINES.globalAddRoutine(widget.routineName, tempStepTimes, tempStepNames);
+              tempStepInputForms.clear();
               Navigator.of(context).pop();
             },
             child: Text("Submit")
@@ -76,7 +109,7 @@ class _InputFormState extends State<InputForm> {
   }
 }
 
-int global_index;
+int globalIndex;
 //this is a very bad solution
 //TODO: Improve this
 
@@ -86,7 +119,7 @@ class StepInputForm extends StatefulWidget
   double stepTime = -1 ;
 
   StepInputForm(int i){
-    global_index = i;
+    globalIndex = i;
   }
   @override
   _StepInputFormState createState() => _StepInputFormState();
@@ -96,13 +129,13 @@ class StepInputForm extends StatefulWidget
 
 class _StepInputFormState extends State<StepInputForm> {
   final _controllerTimeInput = TextEditingController();
-  final _controllerNameInput = TextEditingController();
+  final _controllerStepNameInput = TextEditingController();
 
 
   @override
   void dispose(){
     _controllerTimeInput.dispose();
-    _controllerNameInput.dispose();
+    _controllerStepNameInput.dispose();
     super.dispose();
   }
 
@@ -112,11 +145,11 @@ class _StepInputFormState extends State<StepInputForm> {
     return Column(
         children: <Widget> [
           Container(
-              color: Colors.green,
+              color: Colors.grey,
               alignment: Alignment.center,
               padding: EdgeInsets.all(10),
               child: Text(
-                'Step $global_index :',
+                'Step $globalIndex :',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -129,9 +162,9 @@ class _StepInputFormState extends State<StepInputForm> {
               Expanded(
                 child: TextFormField(
                   cursorColor: Colors.grey,
-                  controller: _controllerNameInput,
+                  controller: _controllerStepNameInput,
                   onChanged: (_){
-                    widget.stepName = _controllerNameInput.text;
+                    widget.stepName = _controllerStepNameInput.text;
                   },
                   decoration: InputDecoration(
                     hintText: 'How is this step called?',

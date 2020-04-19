@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_test/globals.dart';
 class ListedRoutine extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        itemCount: 3,
+        itemCount: GLOBAL_LIST_ROUTINES.currentIndex,
         itemBuilder: (context,i){
-          return SingeListedRoutine();
+          return SingeListedRoutine(i);
         }
     );
   }
 }
 
 class SingeListedRoutine extends StatelessWidget{
+
+  int index;
   @override
+  SingeListedRoutine(int i){
+    index = i;
+  }
+
   Widget build(BuildContext context) {
     return ListTile(
       leading: Icon(Icons.lightbulb_outline),
       title: Text(
-          'Routine1'
+          GLOBAL_LIST_ROUTINES.globalRoutines[index].routineName
       ),
       trailing: IconButton(
         onPressed: null,
