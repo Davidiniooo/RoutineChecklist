@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_test/globals.dart';
 
 List<Widget> tempStepInputForms = [];
 
@@ -56,7 +57,14 @@ class _InputFormState extends State<InputForm> {
           RaisedButton(
             color: Colors.green,
             onPressed: (){
-              for(int i=0;stepsCounter>i;i++){
+              List<StepInputForm> tempCastedList = tempStepInputForms.cast();
+              List<String> tempStepNames = [];
+              List<double> tempStepTimes = [];
+              for(int i=0;stepsCounter>i;i++)
+              {
+                tempStepNames.add(tempCastedList[i].stepName);
+                tempStepTimes.add(tempCastedList[i].stepTime);
+                GLOBAL_LIST_ROUTINES.globalAddRoutine('test', tempStepTimes, tempStepNames);
               }
               Navigator.of(context).pop();
             },

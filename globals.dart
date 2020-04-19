@@ -1,10 +1,10 @@
-class GlobalRoutines {
+class GlobalRoutine {
 
   int index;
   String routineName;
   List<double> stepTimes = [];
   List<String> stepNames = [];
-  GlobalRoutines(int i, String rName, List<double> sTimes, List<String> sNames){
+  GlobalRoutine(int i, String rName, List<double> sTimes, List<String> sNames){
     index = i;
     routineName = rName;
     stepTimes = sTimes;
@@ -12,10 +12,19 @@ class GlobalRoutines {
   }
 }
 
-void globalAddRoutine(int index, String routineName, List<double> stepTimes, List<String> stepNames){
-  GlobalRoutines _ = new GlobalRoutines(index, routineName, stepTimes, stepNames);
-  global_routines.add(_);
-}
 
-// ignore: non_constant_identifier_names
-List<GlobalRoutines> global_routines = [];
+
+class ListGlobalRoutines{
+  int currentIndex = 0;
+  List<GlobalRoutine> global_routines = [];
+
+  void globalAddRoutine(String routineName, List<double> stepTimes, List<String> stepNames){
+    GlobalRoutine _ = new GlobalRoutine(currentIndex, routineName, stepTimes, stepNames);
+    global_routines.add(_);
+    currentIndex++;
+  }
+}
+ListGlobalRoutines GLOBAL_LIST_ROUTINES = new ListGlobalRoutines();
+
+
+
